@@ -26,7 +26,8 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
     const { data } = await axios.post(`/api/posts/replies/${id}`, {
       content: replyContent,
       username,
-      parentReplyId: null,
+      parent_reply_id: null,
+      post_id: id,
     });
     setReplyContent('');
     
