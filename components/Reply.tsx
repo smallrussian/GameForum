@@ -12,6 +12,7 @@ type Props = {
 }
 const Reply = ({reply, postId, parent_reply_id,children, depth}: Props) => {
   const [nestedReplyContent, setNestedReplyContent] = useState('');
+  const [showNestedReplyForm, setShowNestedReplyForm] = useState(false);
   const {id, content, username, replies=[]} = reply;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,18 +26,22 @@ const Reply = ({reply, postId, parent_reply_id,children, depth}: Props) => {
   }
   // console.log(children)
   return (
-    <div className='reply ml-4' style={{marginLeft: `${depth*20}px`}} >
-      <p>{content}</p>
+    <div className='ml-4 mb-4' style={{marginLeft: `${depth*20}px`}} >
+      <p className='bg-secondary text-primary p-3 rounded-xl'>{content}</p>
       {children}
+      <button className='bg-accent text-secondary rounded-md px-4 py-2 mt-2' onClick={() => setShowNestedReplyForm(!showNestedReplyForm)}>
+        {showNestedReplyForm ? 'Hide' : 'Reply'}
+      </button>
       <div>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form className='mt-2' onSubmit={handleSubmit}>
         <TextInput
+          className='mb-2 w-full bg-secondary text-primary rounded-md p-2'
           value={nestedReplyContent}
           onChange={(e) => setNestedReplyContent(e.target.value)}
           placeholder="Reply to this comment"
         />
-        <button type="submit">Reply</button>
+        <button className='bg-accent text-secondary rounded-md px-4 py-2' type="submit">Reply</button>
       </form>
     </div>
   )

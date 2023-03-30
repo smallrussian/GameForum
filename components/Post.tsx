@@ -1,5 +1,4 @@
 // components/Post.tsx
-import reply from '@/pages/api/posts/[id]/replies';
 import { Reply as ReplyType } from '@/types/other';
 import React, { useState } from 'react';
 import Reply from './Reply';
@@ -19,6 +18,7 @@ type PostProps = {
 //a react component called Post taht takes in a title, content, and responses as props and returns a div with a h2, p, and div with a list of responses
 export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
   const [replyContent, setReplyContent] = useState('');
+  const [showReplyForm, setShowReplyForm] = useState(false);
   const {user, userDetails} = useUser()
   const { title, content, id, username } = post;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,20 +75,24 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
     : reply.parentReplyId === parentId) */
   
   return (
-    <div>
-      <h2>{title}</h2>
-      <p>{content}</p>
-      <div>
+    <div className='bg-primary p-6 roundex-xl mb-8'>
+      <h2 className='text-accent font-bold text-2xl mb-2'>{title}</h2>
+      <p className='text-primary mb-4'>{content}</p>
+      <div className='mb-4'>
         {renderReplies(post.replies, null, 1)}
       </div>
-      <form onSubmit={handleSubmit}>
+      <button type='button' onClick={() => setShowReplyForm(!showReplyForm)}>
+        {showReplyForm ? 'Hide' : 'Reply'}
+      </button>
+
+     {showReplyForm && ( <form className='mt-4' onSubmit={handleSubmit}>
         <TextInput
           value={replyContent}
           onChange={(e) => setReplyContent(e.target.value)}
           placeholder="Reply to this comment"
         />
-        <button type="submit">Reply</button>
-      </form>
+        <button className='bg-accent text-secondary rounded-md px-4 py-2' type="submit">Submit</button>
+      </form>)}
     </div>
   );
 };

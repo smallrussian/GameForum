@@ -28,7 +28,21 @@ module.exports = {
   },
   margin:{
     '8px': '0 0 8px 0'
-  }},
+  },
+  backgroundColor: {
+    'primary': '#f3f4f6',
+    'secondary': '#1f2937',
+    'accent': '#3b82f6',
+  },
+  textColor: {
+    'primary': '#1f2937',
+    'secondary': '#f3f4f6',
+    'accent': '#3b82f6',
+  },
+  borderRadius: {
+    'xl': '1rem',
+  },
+},
   },
   plugins: [],
 }
