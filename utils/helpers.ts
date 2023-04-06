@@ -11,8 +11,7 @@ export const updateUsername = async (username:string , userDetails: UserDetails)
     const { error } = await supabase.auth.updateUser({ data: { username: username } });
     if (error) alert(error.message);
     else alert("Username updated!");
-}
-
+};
 
 
     
