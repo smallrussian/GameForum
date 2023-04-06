@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Label, TextInput } from 'flowbite-react';
 import type { Post as PostType } from '@/types/other';
 import { useUser } from '@/utils/useUser';
+import { useRouter } from 'next/router';
 type PostProps = {
   post : PostType;
   responses: ReplyType[]| null;
@@ -21,6 +22,7 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const {user, userDetails} = useUser()
   const { title, content, id, username } = post;
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data } = await axios.post(`/api/posts/replies/${id}`, {
@@ -30,6 +32,7 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
       post_id: id,
     });
     setReplyContent('');
+    router.push('/')
     
 
 
@@ -52,14 +55,14 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
     ).map((reply) => {
       const childReplies = renderReplies(replies, reply.id, depth+1)
       return (
-        <Reply
+        <Reply 
           key={reply.id}
           reply={reply}
           postId={id}
           parent_reply_id={parentId}
           depth={depth}
         >
-          {childReplies && childReplies.length > 0}
+          {childReplies && childReplies.length > 0 && childReplies}
         </Reply>
       )
 
@@ -81,7 +84,7 @@ export const Post = ({ post, responses=[], parentReplyId=null,}:PostProps) => {
       <div className='mb-4'>
         {renderReplies(post.replies, null, 1)}
       </div>
-      <button type='button' onClick={() => setShowReplyForm(!showReplyForm)}>
+      <button className='text-primary' type='button' onClick={() => setShowReplyForm(!showReplyForm)}>
         {showReplyForm ? 'Hide' : 'Reply'}
       </button>
 

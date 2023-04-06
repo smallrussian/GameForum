@@ -17,10 +17,12 @@ const CreatePost=() =>{
         e.preventDefault();
         const forumPost = {
             title: e.target.title.value,
+            game: e.target.game.value,
             content: e.target.content.value,
             username: userDetails?.username,
 
-        }  
+        } 
+        console.log(forumPost)
         await axios.post('/api/posts/createPost', { forumPost });
         router.push('/');
   
@@ -42,6 +44,20 @@ const CreatePost=() =>{
                             name="title"
                             required={true}
                             placeholder="Enter title"
+                            shadow={true}
+                            />
+                        <div className="mb-2 block">
+                            <Label htmlFor="game"
+                                value='Enter Game'>
+                                Game
+                            </Label>
+                        </div>
+                        <TextInput
+                            id="game"
+                            type="text"
+                            name="game"
+                            required={true}
+                            placeholder="Enter game"
                             shadow={true}
                             />
                         <div className="mb-2 block">

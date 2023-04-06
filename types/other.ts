@@ -4,6 +4,7 @@ export type Post = {
     title: string;
     content: string;
     username: string;
+    game: string;
     replies: Reply[];
   };
 export type Reply = {

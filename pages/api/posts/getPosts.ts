@@ -1,6 +1,6 @@
 // pages/api/getPosts.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../../utils/supabaseClient';
+import { supabase } from '@/utils/supabaseClient';
 
 const getPosts = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
