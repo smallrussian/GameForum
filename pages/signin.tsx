@@ -20,7 +20,7 @@ const SignIn = () => {
         }}
         socialLayout="vertical"
         theme="dark"
-        redirectTo={`${getURL()}/setupProfile`}
+        redirectTo="redirect"
       />
     </div>
     // a coment
