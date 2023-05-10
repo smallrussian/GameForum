@@ -19,10 +19,6 @@ type Props = {
 // am async function that gets an array of games from the games table in supabase
 
 const HomePage = ({ posts, games, user }: Props) => {
-  const baseURL =
-    process.env.NODE_ENV === 'production'
-      ? 'https://game-forum-ten.vercel.app'
-      : 'http://localhost:3000';
   const store = useClientStore();
   console.log(user);
   const userDetails = useUser();
@@ -40,7 +36,7 @@ const HomePage = ({ posts, games, user }: Props) => {
             </h1>
             <Link
               className="bg-accent text-secondary px-6 py-2 rounded-lg mb-8"
-              href={`${baseURL}/createPost`}
+              href="/createPost"
             >
               Create Post
             </Link>
