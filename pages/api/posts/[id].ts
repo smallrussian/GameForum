@@ -15,7 +15,7 @@ export default async function handler(
     if (error) {
       return res.status(500).json({ error });
     }
-    res.status(200).json({ post: data });
+    return res.status(200).json({ post: data });
   }
   return res.status(405).json({ error: 'Method not allowed' });
 }

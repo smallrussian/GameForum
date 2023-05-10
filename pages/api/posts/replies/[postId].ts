@@ -24,7 +24,7 @@ export default async function handler(
         .from('replies')
         .insert([{ content, post_id, parent_reply_id, username, user_id }]);
       console.log('success!');
-      res.status(200).json({ Posted: true });
+      return res.status(200).json({ Posted: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -36,7 +36,7 @@ export default async function handler(
         .from('replies')
         .select('*')
         .eq('post_id', postId);
-      res.status(200).json({ replies: data });
+      return res.status(200).json({ replies: data });
     } catch (error) {
       return res.status(500).json({ error });
     }
