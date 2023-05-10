@@ -80,11 +80,13 @@ export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   // Fetching posts
+  const baseURL =
+    process.env.NODE_ENV === 'production'
+      ? 'https://game-forum-6ov4t44m0-smallrussian.vercel.app'
+      : 'http://localhost:3000';
   const supabase = createServerSupabaseClient(ctx);
   const { req } = ctx;
-  const protocol = req.headers['x-forwarded-proto'] || 'http';
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const baseURL = `${protocol}://${host}`;
+
   const { data: gameData, error } = await supabase
     .from('games')
     .select('game')
@@ -92,7 +94,8 @@ export const getServerSideProps: GetServerSideProps = async (
   const games: string[] = gameData?.map((game) => game.game) || [];
   console.log(games);
   // const
-  const postData = await axios.get(`api/posts/getPosts`);
+  console.log(baseURL);
+  const postData = await axios.get(`${baseURL}/api/posts/getPosts`);
 
   // const initialGames=games
 
@@ -104,7 +107,9 @@ export const getServerSideProps: GetServerSideProps = async (
   // Fetching replies for each post
   const updatedPosts = await Promise.all(
     posts.map(async (post: Post) => {
-      const replyData = await axios.get(`api/posts/replies/${post.id}`);
+      const replyData = await axios.get(
+        `${baseURL}/api/posts/replies/${post.id}`
+      );
 
       return {
         ...post,
