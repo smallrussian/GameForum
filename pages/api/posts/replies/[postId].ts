@@ -36,9 +36,13 @@ export default async function handler(
         .from('replies')
         .select('*')
         .eq('post_id', postId);
+      if (error) {
+        return res.status(500).json({ error });
+      }
       return res.status(200).json({ replies: data });
-    } catch (error) {
-      return res.status(500).json({ error });
+    } catch (error: any) {
+      console.error(error.message);
+      return res.status(500).json({ error: error.message });
     }
   }
   return res.status(405).json({ error: 'Method not allowed' });
