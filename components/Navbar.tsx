@@ -1,29 +1,57 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import {useUser } from '@/utils/useUser'
-import { supabase } from '@/utils/supabaseClient'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/require-default-props */
+import { Fragment } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { create } from 'zustand';
+import { Database } from '@/types/supabase';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/router';
+import { getServerSideProps } from '../pages/index';
 
-
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-]
-
-const handleLogout = async () => {
-  const { error } = await supabase.auth.signOut()
-  if (error) console.log('Error logging out:', error.message)
-}
-
+type Props = {
+  home?: boolean;
+  createPost?: boolean;
+  profile?: boolean;
+};
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
-  const userDetails = useUser()
+const Navbar = ({
+  home = false,
+  createPost = false,
+  profile = false
+}: Props) => {
+  const router = useRouter();
+  const user = useUser();
+  console.log(user);
+  const supabase = useSupabaseClient<Database>();
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log('Error logging out:', error.message);
+    console.log('loggedOut');
+    console.log(user);
+    router.push('/');
+  };
+  const handleLogin = () => {
+    console.log(user);
+    router.push('/signin');
+  };
+
+  const navigation = [
+    { name: 'Home', href: '/', current: !!home },
+    {
+      name: 'Create Post',
+      href: '/createPost',
+      current: !!createPost
+    },
+    { name: 'Profile', href: '/', current: !!profile }
+  ];
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -31,7 +59,7 @@ export default function Example() {
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
+                {/* Mobile menu button */}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -47,13 +75,11 @@ export default function Example() {
                     className="block h-8 w-auto lg:hidden"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                     alt="Your Company"
-                    
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                     alt="Your Company"
-                    
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -63,7 +89,9 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          item.current
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -85,7 +113,7 @@ export default function Example() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
-                  <div min-h-32>
+                  <div className="min-h-32">
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>
                       <img
@@ -107,9 +135,13 @@ export default function Example() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
+                          // eslint-disable-next-line jsx-a11y/anchor-is-valid
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
+                            )}
                           >
                             Your Profile
                           </a>
@@ -119,7 +151,10 @@ export default function Example() {
                         {({ active }) => (
                           <a
                             href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
+                            )}
                           >
                             Settings
                           </a>
@@ -127,13 +162,15 @@ export default function Example() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <button onClick={handleLogout}>
-                            <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          <button
+                            type="button"
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700'
+                            )}
+                            onClick={user ? handleLogout : handleLogin}
                           >
-                            Sign out
-                          </a>
+                            {user !== null ? 'Logout' : 'Login'}
                           </button>
                         )}
                       </Menu.Item>
@@ -152,7 +189,9 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    item.current
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}
@@ -165,5 +204,6 @@ export default function Example() {
         </>
       )}
     </Disclosure>
-  )
-}
+  );
+};
+export default Navbar;
