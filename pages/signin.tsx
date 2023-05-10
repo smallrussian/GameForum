@@ -3,6 +3,7 @@ import { useUser } from '@/utils/useUser';
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
+import { getURL } from '@/utils/helpers';
 
 const SignIn = () => {
   const supabaseClient = useSupabaseClient();
@@ -19,7 +20,7 @@ const SignIn = () => {
         }}
         socialLayout="vertical"
         theme="dark"
-        redirectTo="/setupProfile"
+        redirectTo={`${getURL()}/setupProfile`}
       />
     </div>
   );
