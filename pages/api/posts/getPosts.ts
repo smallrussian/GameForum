@@ -19,7 +19,9 @@ const getPosts = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(200).json({ posts });
     }
     return res.status(200).json(posts);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    console.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 };
