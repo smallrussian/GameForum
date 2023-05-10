@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async (
   // Fetching posts
   const baseURL =
     process.env.NODE_ENV === 'production'
-      ? 'https://game-forum-6ov4t44m0-smallrussian.vercel.app'
+      ? 'https://game-forum-ten.vercel.app'
       : 'http://localhost:3000';
   const supabase = createServerSupabaseClient(ctx);
   const { req } = ctx;
