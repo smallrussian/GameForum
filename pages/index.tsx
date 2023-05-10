@@ -92,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const games: string[] = gameData?.map((game) => game.game) || [];
   console.log(games);
   // const
-  const postData = await axios.get(`http://localhost:3001/api/posts/getPosts`);
+  const postData = await axios.get(`http://localhost:3000/api/posts/getPosts`);
 
   // const initialGames=games
 
@@ -105,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const updatedPosts = await Promise.all(
     posts.map(async (post: Post) => {
       const replyData = await axios.get(
-        `http://localhost:3001/api/posts/replies/${post.id}`
+        `http://localhost:3000/api/posts/replies/${post.id}`
       );
 
       return {
