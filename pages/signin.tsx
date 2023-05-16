@@ -11,7 +11,7 @@ const SignIn = () => {
     <div>
       <Auth
         supabaseClient={supabaseClient}
-        providers={['google', 'github', 'discord']}
+        providers={['github', 'discord']}
         appearance={{
           theme: ThemeSupa,
           variables: {
@@ -20,7 +20,7 @@ const SignIn = () => {
         }}
         socialLayout="vertical"
         theme="dark"
-        redirectTo="redirect"
+        redirectTo={`${getURL()}/redirect`}
       />
     </div>
     // a coment

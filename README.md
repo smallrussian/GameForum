@@ -1,38 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Game Forum
 
-## Getting Started
+## Author
 
-First, run the development server:
+Julian Shniter
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Project Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project is a forum site for discussing video games. Users can create posts about different games, view posts made by other users, and reply to these posts. The site supports a dark mode and light mode, and the user's preference is saved for future visits.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+To use this site, start by registering for an account or logging in to an existing account. Log in by clicking the user profile icon at the top and click login. Once you're logged in, you can view the list of posts on the home page. Click on a post to view its contents and the replies from other users. You can write a reply to a post by clicking on the 'Reply' button. To create a new post, click on the 'Create Post' button. You can switch between dark and light mode using the toggle switch at the top of the page.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project is built with Next.js and Tailwind CSS for the frontend, and Supabase for the backend. It uses Zustand for state management and Axios for making HTTP requests.
 
-## Learn More
+## Future Improvements
 
-To learn more about Next.js, take a look at the following resources:
+1. Implement a search function to allow users to find specific posts or replies.
+2. Add the ability for users to edit or delete their own posts and replies.
+3. Implement a tagging system for posts, to allow users to categorize their posts by game or topic.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## User Stories
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. As a user, I want to be able to register and log in securely, so that I can participate in the forum discussions. This includes being able to create a new account with a unique username and a secure password, log in to an existing account, and log out when I'm done. If I forget my password, I should have a way to reset it.
 
-## Deploy on Vercel
+2. As a user, I want to create, view, and reply to posts on the forum, so that I can engage in discussions about different games. I should be able to write a new post and see it appear on the forum. I should also be able to view other users' posts and write replies to them. The posts and replies should be displayed in a way that makes it easy to follow the flow of the conversation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. As a user, I want to be able to switch between dark and light mode, so that I can choose the display setting that's most comfortable for me. The site should remember my preference and use it as the default the next time I visit.
